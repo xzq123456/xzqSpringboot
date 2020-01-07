@@ -6,7 +6,6 @@
 
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/static/css/bootstrap.css}">
     <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/static/css/bootstrap-theme.min.css}">
-
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -37,7 +36,7 @@
                 <li class="dropdown" th:if="${session.user !=null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">我<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" th:text="${session.user.getLogin()}"></a></li>
+                        <li><a href="#" th:text="${session.user.getName()}"></a></li>
                         <li><a href="#">个人信息</a></li>
                         <li><a href="#">退出</a></li>
                     </ul>

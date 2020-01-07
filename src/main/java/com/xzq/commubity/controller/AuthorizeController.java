@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +35,9 @@ public class AuthorizeController {
     UserMapper userMapper;
 
     @GetMapping("/callback")
-    public String callback(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletRequest request) throws Exception {
+    public String callback(@RequestParam("code") String code, @RequestParam("state") String state,
+                           HttpServletRequest request, HttpServletResponse response
+                           ){
         //ctrl+alt+v （快速创建 new xxx()）
         //shift+enter 光标迅速切换到下一行 无论光标在上一行的哪一个位置
         AccesstokenDTO accesstokenDTO = new AccesstokenDTO();
@@ -46,18 +50,22 @@ public class AuthorizeController {
         GithubUser githubUser= githubProvider.getUser(accessToken);
         if(githubUser!=null){
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(githubUser.getLogin());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGtmModified(user.getGmtCreate());
             System.out.println(user);
+//            插入数据库的过程相当于写入session（JsessionID 用random生成的）
             userMapper.insert(user);
-
+            Cookie cookie=new Cookie("token",token);
+            cookie.setMaxAge(1000);
+            response.addCookie(cookie);
 
             //登录成功，写cookie和session
             //会自动把信息给浏览器的cookie
-            request.getSession().setAttribute("user",githubUser);
+//            request.getSession().setAttribute("user",githubUser);
 //            redirect是跳转的目录
             return "redirect:/";
         }else{
