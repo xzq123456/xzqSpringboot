@@ -1,0 +1,87 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${sectionName}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/static/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/static/css/bootstrap-theme.min.css}">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../static/js/bootstrap.min.js" th:src="@{/static/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/static/css/style.css}">
+<body>
+<div th:insert="header::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 " >
+            <h2> <span th:text="${sectionName}"></span></h2>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 ">
+            <div class="list-group">
+                <a th:href="@{/profile/questions}" th:class="${section== 'questions'}? 'list-group-item active':'list-group-item'">
+                  我的问题
+                </a>
+                <a th:href="@{/profile/replyes}" th:class="${section== 'replyes'}? 'list-group-item active':'list-group-item'">
+                    <span class="badge">14</span>
+                    最新回复
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 " >
+            <div class="media" th:each="question:${questions2}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" th:src="${question.user.avatarUrl}">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <span th:text="${question.description}"></span><br/>
+                    <span class="text">
+                       <span th:text="${question.commentCount}"></span>个回复
+                       <span th:text="${question.viewCount}"></span>个查看
+                       <span th:text="${#dates.format(question.getCreate,'yyyy年MM月dd日')}"></span> </span>
+                    </span>
+                </div>
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a th:href="@{'/profile/'+${section}+'/?start=1'}" aria-label="Previous">
+                            首页
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/profile/questions/(start=${page2.pageNum-1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="i:${page2.navigatepageNums}" th:class="${page2.pageNum==i}? 'active':''">
+                        <a th:href="@{/profile/questions/(start=${i})}" th:text="${i}"></a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/profile/questions/(start=${page2.pageNum+1})}" aria-label="Previous">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/profile/questions/(start=${page2.pages})}" aria-label="Previous">
+                            尾页
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+</div>
+
+
+
+</body>
+</html>

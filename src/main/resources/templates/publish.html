@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/static/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-theme.min.css" th:href="@{/static/css/bootstrap-theme.min.css}">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="../static/js/bootstrap.min.js" th:src="@{/static/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/static/css/style.css}">
+<body>
+<div th:insert="header::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 " >
+            <h2> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 发起</h2>
+            <hr>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">问题标题</label>
+                    <input type="text" name="title"  class="form-control" id="title" placeholder="问题标题" th:value="${title}">
+                </div>/
+                <div class="form-group">
+                    <label for="exampleInputPassword1">问题补充</label>
+                    <textarea  class="form-control" name="description" id="description" th:text="${description}"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">添加标签</label>
+                    <input type="text" name="tag" class="form-control" id="tag" placeholder="标签 以，分割" th:value="${tag}">
+                </div>
+                <span class="alert alert-warning"  th:text="${error}" th:if="${error!=null}"></span>
+<!--                type=submit  才能提交-->
+                <button type="submit" class="btn btn-success btn-publish">发布</button>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 ">
+            <h3>问题描述</h3>
+            <p>testtesttesttesttesttesttesttesttesttesttesttest</p>
+            <p>testtesttesttesttesttesttesttesttesttesttesttest</p>
+            <p>testtesttesttesttesttesttesttesttesttesttesttest</p>
+            <p>testtesttesttesttesttesttesttesttesttesttesttest</p>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+
+</html>

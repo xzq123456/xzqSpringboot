@@ -6,4 +6,5 @@ public class GithubUser {
     private String login;//用户名
     private Long id;//id
     private String bio;//描述
+    private String avatarUrl;//图片url
 }

@@ -56,6 +56,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGtmModified(user.getGmtCreate());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             System.out.println(user);
 //            插入数据库的过程相当于写入session（JsessionID 用random生成的）
             userMapper.insert(user);
